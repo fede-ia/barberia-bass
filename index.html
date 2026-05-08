@@ -79,10 +79,59 @@
         .about-body { color: var(--gray); line-height: 1.85; font-size: 0.95rem; margin-bottom: 1rem; }
 
         /* GALLERY */
-        #gallery { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem 6rem; }
-        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .gallery-grid img { width: 100%; aspect-ratio: 4/5; object-fit: cover; filter: grayscale(15%); transition: filter 0.4s, transform 0.4s; display: block; }
-        .gallery-grid img:hover { filter: grayscale(0%); transform: scale(1.01); }
+        #gallery { max-width: 100%; padding: 0 0 0; overflow: hidden; }
+        .gallery-editorial {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            min-height: 520px;
+        }
+        .gallery-main {
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(10%);
+            transition: transform 0.6s ease;
+        }
+        .gallery-main:hover img { transform: scale(1.03); }
+        .gallery-side {
+            display: flex;
+            flex-direction: column;
+        }
+        .gallery-side-img {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-left: 3px solid var(--black);
+        }
+        .gallery-side-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%);
+            transition: transform 0.6s ease;
+        }
+        .gallery-side-img:hover img { transform: scale(1.04); }
+        .gallery-label {
+            position: absolute;
+            bottom: 1.2rem;
+            left: 1.2rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            z-index: 2;
+        }
+        @media (max-width: 640px) {
+            .gallery-editorial { grid-template-columns: 1fr; min-height: auto; }
+            .gallery-side { flex-direction: row; }
+            .gallery-side-img { border-left: none; border-top: 3px solid var(--black); min-height: 220px; }
+        }
 
         /* SCHEDULE */
         #schedule { background: var(--panel); padding: 6rem 2.5rem; }
@@ -234,11 +283,50 @@
     </div>
 </section>
 
+<!-- PORTFOLIO -->
+<div id="portfolio">
+    <div class="portfolio-inner">
+        <p class="section-label">Nuestros trabajos</p>
+        <h2 class="section-title">Lo que<br>hacemos</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <video src="corte tijera.mp4" muted loop playsinline preload="metadata"></video>
+                <div class="portfolio-overlay">
+                    <div class="portfolio-tag">Técnica clásica</div>
+                    <div class="portfolio-name">Corte con Tijera</div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <video src="corte diseño.mp4" muted loop playsinline preload="metadata"></video>
+                <div class="portfolio-overlay">
+                    <div class="portfolio-tag">Estilo propio</div>
+                    <div class="portfolio-name">Corte con Diseño</div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <video src="corte degrade.mp4" muted loop playsinline preload="metadata"></video>
+                <div class="portfolio-overlay">
+                    <div class="portfolio-tag">Tendencia urbana</div>
+                    <div class="portfolio-name">Corte Degradé</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- GALLERY -->
 <section id="gallery">
-    <div class="gallery-grid">
-        <img src="corte.jpeg" alt="Corte de pelo Barbería Bass">
-        <img src="corte 2.jpeg" alt="Resultado corte Barbería Bass">
+    <div class="gallery-editorial">
+        <div class="gallery-main">
+            <img src="corte.jpeg" alt="Corte Barbería Bass">
+            <span class="gallery-label">Barbería Bass</span>
+        </div>
+        <div class="gallery-side">
+            <div class="gallery-side-img">
+                <img src="corte 2.jpeg" alt="Resultado Barbería Bass">
+                <span class="gallery-label">Tiziano Lastero</span>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -275,58 +363,27 @@
         <div class="service-card">
             <div class="service-icon">✂️</div>
             <div class="service-name">Corte Normal</div>
-            <div class="service-desc">Degradado, navaja, tijera. El clásico que nunca falla, ejecutado con precisión y estilo propio.</div>
+            <div class="service-desc">Degradé, navaja o tijera. Como lo uses, queda bien.</div>
             <div class="service-price">$10.000</div>
-            <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Quiero%20sacar%20turno%20para%20un%20corte%20normal%20(%2410.000)...%20%C2%BFTen%C3%A9s%20disponibilidad%3F" class="service-cta" target="_blank" rel="noopener">Reservar este servicio →</a>
+            <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Quiero%20sacar%20turno%20para%20un%20corte%20normal%20(%2410.000)...%20%C2%BFTen%C3%A9s%20disponibilidad%3F" class="service-cta" target="_blank" rel="noopener">Reservar →</a>
         </div>
         <div class="service-card">
             <div class="service-icon">💈</div>
             <div class="service-name">Corte + Barba</div>
-            <div class="service-desc">Corte completo más perfilado y arreglo de barba. El combo perfecto para lucir impecable de la cabeza al mentón.</div>
+            <div class="service-desc">El pack completo. Corte y barba arreglada en una sola visita.</div>
             <div class="service-price">$14.000</div>
-            <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Quiero%20sacar%20turno%20para%20corte%20%2B%20barba%20(%2414.000)...%20%C2%BFTen%C3%A9s%20disponibilidad%3F" class="service-cta" target="_blank" rel="noopener">Reservar este servicio →</a>
+            <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Quiero%20sacar%20turno%20para%20corte%20%2B%20barba%20(%2414.000)...%20%C2%BFTen%C3%A9s%20disponibilidad%3F" class="service-cta" target="_blank" rel="noopener">Reservar →</a>
         </div>
         <div class="service-card">
             <div class="promo-badge">Promo</div>
             <div class="service-icon">👥</div>
             <div class="service-name">Promo Amigo</div>
-            <div class="service-desc">Vengan dos amigos nuevos juntos y pagan $15.000 entre los dos. Traé a tu pata y aprovechen.</div>
+            <div class="service-desc">Si vienen dos amigos nuevos juntos, pagan $15.000 entre los dos.</div>
             <div class="service-price">$15.000</div>
-            <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Queremos%20aprovechar%20la%20promo%20amigo%20(dos%20por%20%2415.000)...%20%C2%BFTen%C3%A9s%20disponibilidad%20para%20los%20dos%3F" class="service-cta" target="_blank" rel="noopener">Reservar este servicio →</a>
+            <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Queremos%20aprovechar%20la%20promo%20amigo%20(dos%20por%20%2415.000)...%20%C2%BFTen%C3%A9s%20disponibilidad%20para%20los%20dos%3F" class="service-cta" target="_blank" rel="noopener">Reservar →</a>
         </div>
     </div>
 </section>
-
-<!-- PORTFOLIO -->
-<div id="portfolio">
-    <div class="portfolio-inner">
-        <p class="section-label">Nuestros trabajos</p>
-        <h2 class="section-title">Lo que<br>hacemos</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <video src="corte tijera.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="portfolio-overlay">
-                    <div class="portfolio-tag">Técnica clásica</div>
-                    <div class="portfolio-name">Corte con Tijera</div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <video src="corte diseño.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="portfolio-overlay">
-                    <div class="portfolio-tag">Estilo propio</div>
-                    <div class="portfolio-name">Corte con Diseño</div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <video src="corte degrade.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="portfolio-overlay">
-                    <div class="portfolio-tag">Tendencia urbana</div>
-                    <div class="portfolio-name">Corte Degradé</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- LOCATION -->
 <section id="location">
