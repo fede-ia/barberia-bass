@@ -276,78 +276,80 @@
 
         /* ── CAROUSEL ── */
         #carousel-section {
-            padding: 8rem 0 5rem;
+            padding: 6rem 0 4rem;
             overflow: hidden;
         }
         .carousel-header {
             max-width: 1100px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 2rem;
             padding: 0 2.5rem;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 1rem;
         }
         .carousel-wrap {
             position: relative;
             overflow: hidden;
             cursor: grab;
             user-select: none;
+            padding: 0 2.5rem;
         }
         .carousel-wrap:active { cursor: grabbing; }
         .carousel-track {
             display: flex;
-            transition: transform 0.55s var(--ease);
+            gap: 0.75rem;
+            transition: transform 0.5s var(--ease);
             will-change: transform;
         }
         .carousel-slide {
-            min-width: calc(80vw);
-            max-width: 900px;
-            padding: 0 0.5rem;
+            /* show ~2.4 cards on mobile, ~3.4 on desktop */
+            min-width: calc((100vw - 5rem) / 2.4);
+            max-width: 280px;
             flex-shrink: 0;
         }
-        @media (min-width: 900px) {
-            .carousel-slide { min-width: 600px; }
+        @media (min-width: 700px) {
+            .carousel-slide { min-width: calc((100vw - 5rem) / 3.4); max-width: 320px; }
+        }
+        @media (min-width: 1100px) {
+            .carousel-slide { min-width: 240px; max-width: 260px; }
         }
         .carousel-slide img {
             width: 100%;
-            aspect-ratio: 4/5;
+            aspect-ratio: 3/4;
             object-fit: cover;
             display: block;
             pointer-events: none;
-            transition: filter 0.4s;
+            border-radius: 2px;
+            transition: filter 0.35s, transform 0.35s var(--ease);
         }
-        .carousel-slide.active img { filter: none; }
-        .carousel-slide:not(.active) img { filter: grayscale(40%) brightness(0.7); }
+        .carousel-slide.active img { filter: none; transform: scale(1.01); }
+        .carousel-slide:not(.active) img { filter: grayscale(50%) brightness(0.65); }
         .carousel-slide-label {
-            margin-top: 0.8rem;
+            margin-top: 0.5rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
         }
         .carousel-slide-label span {
-            font-size: 0.7rem;
-            letter-spacing: 0.18em;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--gray);
         }
         .carousel-slide-label strong {
             font-family: 'Bebas Neue', cursive;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--white);
         }
         .carousel-controls {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 2rem 2.5rem 0;
+            padding: 1.5rem 2.5rem 0;
             max-width: 1100px;
             margin: 0 auto;
         }
         .carousel-btn {
-            width: 44px;
-            height: 44px;
-            border: 1px solid rgba(255,255,255,0.2);
+            width: 38px;
+            height: 38px;
+            border: 1px solid rgba(255,255,255,0.18);
             background: none;
             color: var(--white);
             cursor: pointer;
@@ -357,35 +359,32 @@
             transition: background 0.25s, border-color 0.25s;
             flex-shrink: 0;
         }
-        .carousel-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
-        .carousel-btn svg { width: 18px; height: 18px; }
+        .carousel-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.45); }
+        .carousel-btn svg { width: 16px; height: 16px; }
         .carousel-dots {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             align-items: center;
             flex: 1;
         }
         .carousel-dot {
-            width: 24px;
+            width: 18px;
             height: 2px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.18);
             transition: background 0.3s, width 0.3s;
             cursor: pointer;
             border: none;
         }
-        .carousel-dot.active {
-            background: var(--white);
-            width: 40px;
-        }
+        .carousel-dot.active { background: var(--white); width: 32px; }
         .carousel-counter {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--gray);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             white-space: nowrap;
         }
         .carousel-ig-wrap {
             max-width: 1100px;
-            margin: 3rem auto 0;
+            margin: 2.5rem auto 0;
             padding: 0 2.5rem;
             text-align: center;
         }
@@ -395,19 +394,15 @@
             gap: 0.7rem;
             border: 1px solid rgba(255,255,255,0.2);
             color: var(--white);
-            padding: 0.9rem 2rem;
+            padding: 0.8rem 1.8rem;
             text-decoration: none;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             transition: background 0.25s, border-color 0.25s, transform 0.2s;
         }
-        .btn-ig:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(255,255,255,0.5);
-            transform: translateY(-1px);
-        }
-        .btn-ig svg { width: 18px; height: 18px; }
+        .btn-ig:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.5); transform: translateY(-1px); }
+        .btn-ig svg { width: 16px; height: 16px; }
 
         /* ── SCHEDULE ── */
         #schedule { background: var(--panel); padding: 6rem 2.5rem; }
@@ -707,31 +702,31 @@
         <div class="carousel-track" id="carousel-track">
             <div class="carousel-slide active">
                 <img src="corte.jpeg" alt="Corte Barbería Bass" loading="lazy">
-                <div class="carousel-slide-label">
-                    <span>Barbería Bass</span>
-                    <strong>01 / 04</strong>
-                </div>
+                <div class="carousel-slide-label"><span>Bass</span><strong>01/07</strong></div>
             </div>
             <div class="carousel-slide">
                 <img src="corte 2.jpeg" alt="Corte Barbería Bass" loading="lazy">
-                <div class="carousel-slide-label">
-                    <span>Barbería Bass</span>
-                    <strong>02 / 04</strong>
-                </div>
+                <div class="carousel-slide-label"><span>Bass</span><strong>02/07</strong></div>
             </div>
             <div class="carousel-slide">
                 <img src="corte 3.jpeg" alt="Corte Barbería Bass" loading="lazy">
-                <div class="carousel-slide-label">
-                    <span>Barbería Bass</span>
-                    <strong>03 / 04</strong>
-                </div>
+                <div class="carousel-slide-label"><span>Bass</span><strong>03/07</strong></div>
             </div>
             <div class="carousel-slide">
                 <img src="corte 4.jpeg" alt="Corte Barbería Bass" loading="lazy">
-                <div class="carousel-slide-label">
-                    <span>Barbería Bass</span>
-                    <strong>04 / 04</strong>
-                </div>
+                <div class="carousel-slide-label"><span>Bass</span><strong>04/07</strong></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="WhatsApp Image 2026-05-10 at 3.33.45 PM.jpeg" alt="Corte Barbería Bass" loading="lazy">
+                <div class="carousel-slide-label"><span>Bass</span><strong>05/07</strong></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="WhatsApp Image 2026-05-10 at 3.33.45 PM (1).jpeg" alt="Corte Barbería Bass" loading="lazy">
+                <div class="carousel-slide-label"><span>Bass</span><strong>06/07</strong></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="WhatsApp Image 2026-05-10 at 3.33.45 PM (2).jpeg" alt="Corte Barbería Bass" loading="lazy">
+                <div class="carousel-slide-label"><span>Bass</span><strong>07/07</strong></div>
             </div>
         </div>
     </div>
@@ -747,8 +742,11 @@
             <button class="carousel-dot" data-index="1" aria-label="Foto 2"></button>
             <button class="carousel-dot" data-index="2" aria-label="Foto 3"></button>
             <button class="carousel-dot" data-index="3" aria-label="Foto 4"></button>
+            <button class="carousel-dot" data-index="4" aria-label="Foto 5"></button>
+            <button class="carousel-dot" data-index="5" aria-label="Foto 6"></button>
+            <button class="carousel-dot" data-index="6" aria-label="Foto 7"></button>
         </div>
-        <span class="carousel-counter" id="carousel-counter">1 / 4</span>
+        <span class="carousel-counter" id="carousel-counter">1 / 7</span>
     </div>
     <div class="carousel-ig-wrap reveal">
         <a href="https://www.instagram.com/barberia.bass/" class="btn-ig" target="_blank" rel="noopener">
@@ -948,25 +946,25 @@ document.querySelectorAll('.portfolio-item').forEach(item => {
 // ── CAROUSEL ──
 (function() {
     const track = document.getElementById('carousel-track');
-    const slides = track.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.carousel-dot');
+    const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+    const dots = Array.from(document.querySelectorAll('.carousel-dot'));
     const counter = document.getElementById('carousel-counter');
+    const wrap = document.getElementById('carousel-wrap');
     const total = slides.length;
     let current = 0;
     let autoTimer;
     let startX = 0, isDragging = false, dragDelta = 0;
 
+    function slideW() { return slides[0].offsetWidth + 12; } // 12 = gap
+
     function getOffset() {
-        const wrap = document.getElementById('carousel-wrap');
-        const slideW = slides[0].offsetWidth;
-        const wrapW = wrap.offsetWidth;
-        const center = (wrapW - slideW) / 2;
-        return -(current * slideW) + center;
+        // keep active slide as second visible (peek prev + active + next+)
+        return -(current * slideW());
     }
 
     function goTo(index, animate = true) {
-        current = (index + total) % total;
-        track.style.transition = animate ? 'transform 0.55s cubic-bezier(0.16,1,0.3,1)' : 'none';
+        current = Math.max(0, Math.min(index, total - 1));
+        track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.16,1,0.3,1)' : 'none';
         track.style.transform = `translateX(${getOffset()}px)`;
         slides.forEach((s, i) => s.classList.toggle('active', i === current));
         dots.forEach((d, i) => d.classList.toggle('active', i === current));
@@ -975,19 +973,16 @@ document.querySelectorAll('.portfolio-item').forEach(item => {
 
     function startAuto() {
         clearInterval(autoTimer);
-        autoTimer = setInterval(() => goTo(current + 1), 4000);
+        autoTimer = setInterval(() => goTo(current < total - 1 ? current + 1 : 0), 3500);
     }
 
     document.getElementById('prev-btn').addEventListener('click', () => { goTo(current - 1); startAuto(); });
     document.getElementById('next-btn').addEventListener('click', () => { goTo(current + 1); startAuto(); });
     dots.forEach(d => d.addEventListener('click', () => { goTo(+d.dataset.index); startAuto(); }));
 
-    // Drag/swipe
-    const wrap = document.getElementById('carousel-wrap');
+    // Drag / swipe
     wrap.addEventListener('pointerdown', e => {
-        isDragging = true;
-        startX = e.clientX;
-        dragDelta = 0;
+        isDragging = true; startX = e.clientX; dragDelta = 0;
         track.style.transition = 'none';
         wrap.setPointerCapture(e.pointerId);
     });
@@ -999,19 +994,17 @@ document.querySelectorAll('.portfolio-item').forEach(item => {
     wrap.addEventListener('pointerup', () => {
         if (!isDragging) return;
         isDragging = false;
-        if (dragDelta < -60) goTo(current + 1);
-        else if (dragDelta > 60) goTo(current - 1);
+        if (dragDelta < -50) goTo(current + 1);
+        else if (dragDelta > 50) goTo(current - 1);
         else goTo(current);
         startAuto();
     });
 
-    // Keyboard
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft') { goTo(current - 1); startAuto(); }
         if (e.key === 'ArrowRight') { goTo(current + 1); startAuto(); }
     });
 
-    // Init
     window.addEventListener('load', () => { goTo(0, false); startAuto(); });
     window.addEventListener('resize', () => goTo(current, false), { passive: true });
 })();
