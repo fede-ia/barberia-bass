@@ -210,42 +210,110 @@
             margin-bottom: 2.5rem;
         }
 
-        /* ── ABOUT ── */
-        #about {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-            max-width: 1100px;
-            margin: 0 auto;
+        /* ── BRAND SECTION ── */
+        #brand {
+            position: relative;
+            overflow: hidden;
+            background: var(--panel);
             padding: 8rem 2.5rem;
         }
-        .about-img-wrap { position: relative; }
-        .about-img-wrap img {
-            width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: cover;
-            display: block;
-            filter: grayscale(20%) contrast(1.05);
-        }
-        .about-img-wrap::before {
-            content: '';
+        .brand-bg-logo {
             position: absolute;
-            top: -10px; right: -10px; bottom: 10px; left: 10px;
-            border: 1px solid rgba(255,255,255,0.12);
-            z-index: -1;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 55%;
+            opacity: 0.04;
             pointer-events: none;
+            filter: brightness(0) invert(1);
+            user-select: none;
         }
-        .about-stats {
+        .brand-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .brand-left { display: flex; flex-direction: column; align-items: flex-start; }
+        .brand-logo-main {
+            width: min(200px, 55vw);
+            height: auto;
+            filter: brightness(0) invert(1);
+            margin-bottom: 2.5rem;
+            object-fit: contain;
+        }
+        .brand-tagline {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+        }
+        .brand-tagline em {
+            font-style: normal;
+            color: rgba(255,255,255,0.3);
+        }
+        .brand-sub {
+            font-size: 0.88rem;
+            color: var(--gray);
+            line-height: 1.8;
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+        .brand-stats {
             display: flex;
             gap: 2.5rem;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            width: 100%;
+        }
+        .bstat { display: flex; flex-direction: column; gap: 0.2rem; }
+        .bstat-num {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            line-height: 1;
+            color: var(--white);
+        }
+        .bstat-lbl {
+            font-size: 0.68rem;
+            color: var(--gray);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .brand-right { display: flex; flex-direction: column; gap: 1px; }
+        .brand-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            padding: 1.4rem 0;
             border-bottom: 1px solid var(--border);
         }
-        .stat-num { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; display: block; }
-        .stat-lbl { font-size: 0.72rem; color: var(--gray); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; }
-        .about-body { color: var(--gray); line-height: 1.85; font-size: 0.95rem; margin-bottom: 1rem; }
+        .brand-item:first-child { border-top: 1px solid var(--border); }
+        .brand-item-num {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.2);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .brand-item-text {
+            font-size: 0.92rem;
+            color: var(--white);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        .brand-item-desc {
+            font-size: 0.78rem;
+            color: var(--gray);
+            margin-top: 0.2rem;
+        }
+        @media (max-width: 900px) {
+            .brand-inner { grid-template-columns: 1fr; gap: 3rem; }
+            .brand-bg-logo { width: 90%; right: -20%; opacity: 0.03; }
+        }
 
         /* ── TICKER ── */
         .ticker-wrap {
@@ -738,7 +806,7 @@
         <img src="basslogopng.png" alt="Barbería Bass" width="120" height="36">
     </div>
     <ul class="nav-links">
-        <li><a href="#about">Nosotros</a></li>
+        <li><a href="#brand">Nosotros</a></li>
         <li><a href="#services">Servicios</a></li>
         <li><a href="#portfolio">Trabajos</a></li>
         <li><a href="#location">Ubicación</a></li>
@@ -792,54 +860,71 @@
     </div>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-    <div class="about-img-wrap reveal-left">
-        <img src="tizi.jpeg" alt="Tiziano Lastero - Barbero profesional" loading="lazy">
-    </div>
-    <div class="about-text-block">
-        <p class="section-label reveal">Sobre mí</p>
-        <h2 class="section-title reveal reveal-delay-1">Tiziano<br>Lastero</h2>
-        <div class="about-stats reveal reveal-delay-2">
-            <div>
-                <span class="stat-num">4</span>
-                <span class="stat-lbl">Años de<br>experiencia</span>
-            </div>
-            <div>
-                <span class="stat-num">✓</span>
-                <span class="stat-lbl">Título oficial<br>de barbería</span>
+<!-- BRAND -->
+<section id="brand">
+    <img src="basslogopng.png" alt="" class="brand-bg-logo" aria-hidden="true">
+    <div class="brand-inner">
+        <div class="brand-left">
+            <img src="basslogopng.png" alt="Barbería Bass" class="brand-logo-main reveal" loading="lazy">
+            <h2 class="brand-tagline reveal reveal-delay-1">
+                Donde el estilo<br>
+                <em>se convierte</em><br>
+                en identidad.
+            </h2>
+            <p class="brand-sub reveal reveal-delay-2">
+                Con 4 años de experiencia y título oficial en barbería masculina, llevamos cada corte a otro nivel. No se trata solo de un cambio de look — se trata de actitud, confianza y estilo.
+            </p>
+            <div class="brand-stats reveal reveal-delay-3">
+                <div class="bstat">
+                    <span class="bstat-num">4</span>
+                    <span class="bstat-lbl">Años de<br>experiencia</span>
+                </div>
+                <div class="bstat">
+                    <span class="bstat-num">✓</span>
+                    <span class="bstat-lbl">Título oficial<br>de barbería</span>
+                </div>
+                <div class="bstat">
+                    <span class="bstat-num">100%</span>
+                    <span class="bstat-lbl">Atención<br>personalizada</span>
+                </div>
             </div>
         </div>
-        <p class="about-body reveal reveal-delay-2">Con 4 años de experiencia y título oficial en barbería masculina, llevamos cada corte a otro nivel.</p>
-        <p class="about-body reveal reveal-delay-3">Donde el estilo se convierte en identidad.</p>
-        <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Vi%20la%20p%C3%A1gina%20de%20Barber%C3%ADa%20Bass%20y%20quiero%20sacar%20un%20turno%20para%20cortarme...%20%C2%BFTen%C3%A9s%20disponibilidad%3F" class="btn-wsp reveal reveal-delay-3" target="_blank" rel="noopener" style="margin-top:1rem; animation:none;">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Sacar turno ahora
-        </a>
+        <div class="brand-right">
+            <div class="brand-item reveal reveal-delay-1">
+                <span class="brand-item-num">01</span>
+                <div>
+                    <div class="brand-item-text">Fades perfectos</div>
+                    <div class="brand-item-desc">Desde bajo hasta alto, con transición limpia</div>
+                </div>
+            </div>
+            <div class="brand-item reveal reveal-delay-2">
+                <span class="brand-item-num">02</span>
+                <div>
+                    <div class="brand-item-text">Cortes modernos y clásicos</div>
+                    <div class="brand-item-desc">Modcut, mohicano, degradé y más</div>
+                </div>
+            </div>
+            <div class="brand-item reveal reveal-delay-3">
+                <span class="brand-item-num">03</span>
+                <div>
+                    <div class="brand-item-text">Diseños personalizados</div>
+                    <div class="brand-item-desc">Líneas y detalles hechos a medida</div>
+                </div>
+            </div>
+            <div class="brand-item reveal reveal-delay-3">
+                <span class="brand-item-num">04</span>
+                <div>
+                    <div class="brand-item-text">Atención personalizada</div>
+                    <div class="brand-item-desc">Salís sintiéndote al 100%</div>
+                </div>
+            </div>
+            <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Vi%20la%20p%C3%A1gina%20de%20Barber%C3%ADa%20Bass%20y%20quiero%20sacar%20un%20turno%20para%20cortarme...%20%C2%BFTen%C3%A9s%20disponibilidad%3F" class="btn-wsp reveal" target="_blank" rel="noopener" style="margin-top:2rem; animation:none;">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Reservar turno
+            </a>
+        </div>
     </div>
 </section>
-
-<!-- FEATURES -->
-<div id="features">
-    <div class="features-grid">
-        <div class="feature-card reveal reveal-delay-1">
-            <div class="feature-num">01</div>
-            <div class="feature-text">Fades perfectos desde bajo hasta alto</div>
-        </div>
-        <div class="feature-card reveal reveal-delay-2">
-            <div class="feature-num">02</div>
-            <div class="feature-text">Cortes modernos y clásicos</div>
-        </div>
-        <div class="feature-card reveal reveal-delay-3">
-            <div class="feature-num">03</div>
-            <div class="feature-text">Diseños personalizados a tu medida</div>
-        </div>
-        <div class="feature-card reveal reveal-delay-3">
-            <div class="feature-num">04</div>
-            <div class="feature-text">Atención 100% personalizada</div>
-        </div>
-    </div>
-</div>
 
 <!-- QUOTE -->
 <div id="quote-section">
