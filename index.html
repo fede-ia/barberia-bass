@@ -130,10 +130,18 @@
             align-items: center;
         }
         .hero-logo {
-            width: min(260px, 60vw);
-            margin-bottom: 2rem;
+            width: min(220px, 52vw);
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 2.5rem;
             filter: brightness(0) invert(1);
-            animation: fadeDown 1s var(--ease) both;
+            drop-shadow: none;
+            animation: logoPop 1.2s var(--ease) both;
+        }
+        @keyframes logoPop {
+            0%   { opacity: 0; transform: translateY(-20px) scale(0.88); filter: brightness(0) invert(1) blur(4px); }
+            60%  { opacity: 1; transform: translateY(4px) scale(1.03); filter: brightness(0) invert(1) blur(0px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: brightness(0) invert(1) blur(0px); }
         }
         .hero-tagline {
             font-family: 'Bebas Neue', cursive;
@@ -615,7 +623,7 @@
     <canvas id="hero-canvas"></canvas>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <img src="basslogopng.png" alt="Barbería Bass" class="hero-logo" width="260" height="80">
+        <img src="basslogopng.png" alt="Barbería Bass" class="hero-logo">
         <h1 class="hero-tagline">
             <span>Tu mejor</span>
             <span>versión</span>
