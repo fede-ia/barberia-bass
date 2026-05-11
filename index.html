@@ -247,6 +247,137 @@
         .stat-lbl { font-size: 0.72rem; color: var(--gray); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; }
         .about-body { color: var(--gray); line-height: 1.85; font-size: 0.95rem; margin-bottom: 1rem; }
 
+        /* ── TICKER ── */
+        .ticker-wrap {
+            overflow: hidden;
+            background: var(--white);
+            padding: 0.85rem 0;
+            white-space: nowrap;
+        }
+        .ticker-track {
+            display: inline-flex;
+            animation: ticker 22s linear infinite;
+            will-change: transform;
+        }
+        .ticker-track:hover { animation-play-state: paused; }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding-right: 3rem;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 0.12em;
+            color: var(--black);
+        }
+        .ticker-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--black);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        @keyframes ticker {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* ── FEATURES ── */
+        #features {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2.5rem 0;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+        @media (min-width: 700px) { .features-grid { grid-template-columns: repeat(4, 1fr); } }
+        .feature-card {
+            background: var(--black);
+            padding: 2rem 1.5rem;
+            transition: background 0.3s;
+        }
+        .feature-card:hover { background: #0e0e0e; }
+        .feature-num {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: rgba(255,255,255,0.12);
+            line-height: 1;
+            margin-bottom: 0.8rem;
+        }
+        .feature-text {
+            font-size: 0.82rem;
+            color: var(--white);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* ── QUOTE ── */
+        #quote-section {
+            padding: 7rem 2.5rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .quote-mark {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 5rem;
+            line-height: 0.5;
+            color: rgba(255,255,255,0.07);
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+        .quote-text {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2rem, 5.5vw, 4rem);
+            line-height: 1.05;
+            letter-spacing: 0.02em;
+            color: var(--white);
+        }
+        .quote-text em {
+            font-style: normal;
+            color: rgba(255,255,255,0.35);
+        }
+
+        /* ── STATEMENTS ── */
+        #statements {
+            border-top: 1px solid var(--border);
+            padding: 5rem 2.5rem 6rem;
+            text-align: center;
+            background: var(--panel);
+        }
+        .statements-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .statement-word {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            line-height: 1;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+        }
+        .statement-word.sep {
+            color: rgba(255,255,255,0.15);
+        }
+        .statement-word.visible { opacity: 1; transform: translateY(0); }
+        .statement-sub {
+            font-size: 0.78rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
         /* ── PORTFOLIO (videos) ── */
         #portfolio { background: var(--panel); padding: 8rem 2.5rem; }
         .portfolio-inner { max-width: 1100px; margin: 0 auto; }
@@ -640,6 +771,27 @@
     </div>
 </section>
 
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+        <span class="ticker-item">Cortes Modernos <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Degradados <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Diseños Personalizados <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Barbería Bass <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Fade Perfectos <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Atención Personalizada <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Tu Mejor Versión <span class="ticker-dot"></span></span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-item">Cortes Modernos <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Degradados <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Diseños Personalizados <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Barbería Bass <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Fade Perfectos <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Atención Personalizada <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Tu Mejor Versión <span class="ticker-dot"></span></span>
+    </div>
+</div>
+
 <!-- ABOUT -->
 <section id="about">
     <div class="about-img-wrap reveal-left">
@@ -658,14 +810,64 @@
                 <span class="stat-lbl">Título oficial<br>de barbería</span>
             </div>
         </div>
-        <p class="about-body reveal reveal-delay-2">Soy Tiziano Lastero, barbero con 4 años de experiencia y título oficial en barbería para hombre. Me especializo en cortes modernos, degradados y diseños personalizados.</p>
-        <p class="about-body reveal reveal-delay-3">Cada corte es único. Mi objetivo es que salgas de la silla sintiéndote seguro y siendo la mejor versión de vos mismo.</p>
+        <p class="about-body reveal reveal-delay-2">Con 4 años de experiencia y título oficial en barbería masculina, llevamos cada corte a otro nivel.</p>
+        <p class="about-body reveal reveal-delay-3">Donde el estilo se convierte en identidad.</p>
         <a href="https://wa.me/5493874533767?text=Hola!%20%F0%9F%91%8B%20Vi%20la%20p%C3%A1gina%20de%20Barber%C3%ADa%20Bass%20y%20quiero%20sacar%20un%20turno%20para%20cortarme...%20%C2%BFTen%C3%A9s%20disponibilidad%3F" class="btn-wsp reveal reveal-delay-3" target="_blank" rel="noopener" style="margin-top:1rem; animation:none;">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Sacar turno ahora
         </a>
     </div>
 </section>
+
+<!-- FEATURES -->
+<div id="features">
+    <div class="features-grid">
+        <div class="feature-card reveal reveal-delay-1">
+            <div class="feature-num">01</div>
+            <div class="feature-text">Fades perfectos desde bajo hasta alto</div>
+        </div>
+        <div class="feature-card reveal reveal-delay-2">
+            <div class="feature-num">02</div>
+            <div class="feature-text">Cortes modernos y clásicos</div>
+        </div>
+        <div class="feature-card reveal reveal-delay-3">
+            <div class="feature-num">03</div>
+            <div class="feature-text">Diseños personalizados a tu medida</div>
+        </div>
+        <div class="feature-card reveal reveal-delay-3">
+            <div class="feature-num">04</div>
+            <div class="feature-text">Atención 100% personalizada</div>
+        </div>
+    </div>
+</div>
+
+<!-- QUOTE -->
+<div id="quote-section">
+    <span class="quote-mark reveal">"</span>
+    <p class="quote-text reveal reveal-delay-1">
+        No se trata solo de<br>
+        <em>un cambio de look…</em><br>
+        se trata de actitud,<br>confianza y estilo.
+    </p>
+</div>
+
+<!-- STATEMENTS -->
+<div id="statements">
+    <div class="statements-row">
+        <span class="statement-word">Sentite</span>
+        <span class="statement-word">seguro.</span>
+    </div>
+    <div class="statements-row">
+        <span class="statement-word">Renovate.</span>
+    </div>
+    <div class="statements-row">
+        <span class="statement-word sep">Mostrá</span>
+        <span class="statement-word sep">tu</span>
+        <span class="statement-word">mejor</span>
+        <span class="statement-word">versión.</span>
+    </div>
+    <p class="statement-sub reveal" style="margin-top:2.5rem;">Barbería Bass · Salta</p>
+</div>
 
 <!-- PORTFOLIO (videos) -->
 <div id="portfolio">
@@ -871,6 +1073,21 @@ const revealObs = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 revealEls.forEach(el => revealObs.observe(el));
+
+// ── STATEMENTS WORD-BY-WORD ──
+const stmtWords = document.querySelectorAll('.statement-word');
+const stmtObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            stmtWords.forEach((w, i) => {
+                setTimeout(() => w.classList.add('visible'), i * 120);
+            });
+            stmtObs.disconnect();
+        }
+    });
+}, { threshold: 0.3 });
+const stmtSection = document.getElementById('statements');
+if (stmtSection) stmtObs.observe(stmtSection);
 
 // ── THREE.JS HERO ──
 window.addEventListener('load', () => {
