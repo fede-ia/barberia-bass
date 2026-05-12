@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barbería Bass | Tiziano Lastero</title>
-    <meta name="description" content="Barbería Bass - Cortes premium para hombres en Salta. Tiziano Lastero, 4 años de experiencia. Reservá tu turno por WhatsApp.">
+    <title>Barbería Bass | Salta</title>
+    <meta name="description" content="Barbería Bass - Cortes premium en Salta. Degradados, diseños y cortes modernos. Reservá tu turno por WhatsApp.">
+    <meta name="theme-color" content="#080808">
+    <!-- DNS prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Preload logo critico -->
+    <link rel="preload" href="basslogopng.png" as="image" fetchpriority="high">
+    <!-- Fonts: solo los weights necesarios -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Three.js: carga diferida, no bloquea render -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -313,6 +322,12 @@
         @media (max-width: 900px) {
             .brand-inner { grid-template-columns: 1fr; gap: 3rem; }
             .brand-bg-logo { width: 90%; right: -20%; opacity: 0.03; }
+        }
+
+        /* ── CONTENT VISIBILITY (off-screen rendering skip) ── */
+        #brand, #portfolio, #carousel-section, #schedule, #services, #location, #quote-section, #statements {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 600px;
         }
 
         /* ── TICKER ── */
@@ -803,7 +818,7 @@
 <!-- NAV -->
 <nav id="main-nav">
     <div class="nav-logo">
-        <img src="basslogopng.png" alt="Barbería Bass" width="120" height="36">
+        <img src="basslogopng.png" alt="Barbería Bass" width="120" height="36" decoding="async" fetchpriority="low">
     </div>
     <ul class="nav-links">
         <li><a href="#brand">Nosotros</a></li>
@@ -822,7 +837,7 @@
     <canvas id="hero-canvas"></canvas>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <img src="basslogopng.png" alt="Barbería Bass" class="hero-logo">
+        <img src="basslogopng.png" alt="Barbería Bass" class="hero-logo" fetchpriority="high" decoding="sync">
         <h1 class="hero-tagline">
             <span>Tu mejor</span>
             <span>versión</span>
@@ -862,10 +877,10 @@
 
 <!-- BRAND -->
 <section id="brand">
-    <img src="basslogopng.png" alt="" class="brand-bg-logo" aria-hidden="true">
+    <img src="basslogopng.png" alt="" class="brand-bg-logo" aria-hidden="true" loading="lazy" decoding="async">
     <div class="brand-inner">
         <div class="brand-left">
-            <img src="basslogopng.png" alt="Barbería Bass" class="brand-logo-main reveal" loading="lazy">
+            <img src="basslogopng.png" alt="Barbería Bass" class="brand-logo-main reveal" loading="lazy" decoding="async">
             <h2 class="brand-tagline reveal reveal-delay-1">
                 Donde el estilo<br>
                 <em>se convierte</em><br>
@@ -996,7 +1011,7 @@
     <div class="carousel-wrap reveal" id="carousel-wrap">
         <div class="carousel-track" id="carousel-track">
             <div class="carousel-slide active">
-                <img src="corte.jpeg" alt="Corte Barbería Bass" loading="lazy">
+                <img src="corte.jpeg" alt="Corte Barbería Bass" loading="lazy" decoding="async">
                 <div class="carousel-slide-label"><span>Bass</span><strong>01/07</strong></div>
             </div>
             <div class="carousel-slide">
@@ -1174,83 +1189,126 @@ const stmtObs = new IntersectionObserver((entries) => {
 const stmtSection = document.getElementById('statements');
 if (stmtSection) stmtObs.observe(stmtSection);
 
-// ── THREE.JS HERO ──
-window.addEventListener('load', () => {
+// ── THREE.JS HERO ── (idle callback para no bloquear render)
+function initThree() {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas || typeof THREE === 'undefined') return;
+
+    const isMobile = window.innerWidth < 768;
     const scene = new THREE.Scene();
     const w = window.innerWidth, h = window.innerHeight;
     const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
     camera.position.z = 32;
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
-    renderer.setSize(w, h);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-    const knotGeo = new THREE.TorusKnotGeometry(9, 2.4, 120, 16);
-    const knotMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0.1, transparent: true });
+    const renderer = new THREE.WebGLRenderer({
+        canvas, alpha: true,
+        antialias: !isMobile,
+        powerPreference: 'low-power'
+    });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
+
+    // Menor complejidad en móvil
+    const segments = isMobile ? 80 : 120;
+    const pCount = isMobile ? 100 : 180;
+
+    const knotGeo = new THREE.TorusKnotGeometry(9, 2.4, segments, 14);
+    const knotMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0.09, transparent: true });
     const knot = new THREE.Mesh(knotGeo, knotMat);
     scene.add(knot);
 
-    const ringGeo = new THREE.TorusGeometry(18, 0.07, 6, 80);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.04, transparent: true });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
-    ring.rotation.x = Math.PI / 3;
-    scene.add(ring);
+    if (!isMobile) {
+        const ringGeo = new THREE.TorusGeometry(18, 0.07, 6, 80);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.03, transparent: true });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = Math.PI / 3;
+        scene.add(ring);
+    }
 
     const pGeo = new THREE.BufferGeometry();
-    const pCount = 180;
     const pPos = new Float32Array(pCount * 3);
     for (let i = 0; i < pCount * 3; i++) pPos[i] = (Math.random() - 0.5) * 90;
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-    scene.add(new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.13, opacity: 0.3, transparent: true })));
+    scene.add(new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xffffff, size: isMobile ? 0.18 : 0.13, opacity: 0.25, transparent: true })));
 
     let mx = 0, my = 0;
-    window.addEventListener('mousemove', e => {
-        mx = (e.clientX / window.innerWidth - 0.5) * 0.5;
-        my = (e.clientY / window.innerHeight - 0.5) * 0.5;
-    }, { passive: true });
+    if (!isMobile) {
+        window.addEventListener('mousemove', e => {
+            mx = (e.clientX / window.innerWidth - 0.5) * 0.5;
+            my = (e.clientY / window.innerHeight - 0.5) * 0.5;
+        }, { passive: true });
+    }
 
-    let raf;
-    const heroSection = document.getElementById('hero');
+    let raf, ring2;
+    scene.children.forEach(c => { if (c.geometry && c.geometry.type === 'TorusGeometry') ring2 = c; });
+
     const heroObs = new IntersectionObserver(([e]) => {
-        if (e.isIntersecting) { tick(); } else { cancelAnimationFrame(raf); }
-    });
-    heroObs.observe(heroSection);
+        if (e.isIntersecting) tick(); else cancelAnimationFrame(raf);
+    }, { threshold: 0.1 });
+    heroObs.observe(document.getElementById('hero'));
 
     function tick() {
         raf = requestAnimationFrame(tick);
-        knot.rotation.x += 0.0022;
-        knot.rotation.y += 0.0038;
-        ring.rotation.z += 0.0007;
+        knot.rotation.x += 0.002;
+        knot.rotation.y += 0.0035;
+        if (ring2) ring2.rotation.z += 0.0007;
         camera.position.x += (mx * 5 - camera.position.x) * 0.04;
         camera.position.y += (-my * 5 - camera.position.y) * 0.04;
         camera.lookAt(scene.position);
         renderer.render(scene, camera);
     }
 
+    let resizeTimer;
     window.addEventListener('resize', () => {
-        const w = window.innerWidth, h = window.innerHeight;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            const w = window.innerWidth, h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        }, 200);
     }, { passive: true });
-});
+}
 
-// ── VIDEO LAZY LOAD + AUTOPLAY ──
+// Espera a que Three.js cargue antes de inicializar
+if (typeof THREE !== 'undefined') {
+    initThree();
+} else {
+    document.querySelector('script[src*="three"]').addEventListener('load', initThree);
+}
+
+// ── VIDEO TRUE LAZY LOAD ──
 const videoObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
         const v = e.target;
         if (e.isIntersecting) {
-            if (!v.src && v.dataset.src) v.src = v.dataset.src;
+            // Carga src solo cuando entra en viewport
+            if (v.dataset.src && !v.src) {
+                v.src = v.dataset.src;
+                v.load();
+            }
             v.play().catch(() => {});
         } else {
             v.pause();
         }
     });
-}, { threshold: 0.2 });
-document.querySelectorAll('.portfolio-item video').forEach(v => videoObs.observe(v));
+}, { threshold: 0.15, rootMargin: '100px' });
+
+document.querySelectorAll('.portfolio-item video').forEach(v => {
+    // Mover src a data-src para evitar carga anticipada
+    if (v.src && !v.dataset.src) {
+        v.dataset.src = v.getAttribute('src');
+        v.removeAttribute('src');
+    }
+    videoObs.observe(v);
+});
+
 document.querySelectorAll('.portfolio-item').forEach(item => {
-    item.addEventListener('mouseenter', () => item.querySelector('video').play().catch(() => {}));
+    item.addEventListener('mouseenter', () => {
+        const v = item.querySelector('video');
+        if (v.dataset.src && !v.src) { v.src = v.dataset.src; v.load(); }
+        v.play().catch(() => {});
+    }, { passive: true });
 });
 
 // ── CAROUSEL ──
