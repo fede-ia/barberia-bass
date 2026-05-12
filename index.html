@@ -512,6 +512,8 @@
             cursor: grab;
             user-select: none;
             padding: 0 2.5rem;
+            /* Permite scroll vertical, solo captura horizontal */
+            touch-action: pan-y;
         }
         .carousel-wrap:active { cursor: grabbing; }
         .carousel-track {
@@ -941,34 +943,6 @@
     </div>
 </section>
 
-<!-- QUOTE -->
-<div id="quote-section">
-    <span class="quote-mark reveal">"</span>
-    <p class="quote-text reveal reveal-delay-1">
-        No se trata solo de<br>
-        <em>un cambio de look…</em><br>
-        se trata de actitud,<br>confianza y estilo.
-    </p>
-</div>
-
-<!-- STATEMENTS -->
-<div id="statements">
-    <div class="statements-row">
-        <span class="statement-word">Sentite</span>
-        <span class="statement-word">seguro.</span>
-    </div>
-    <div class="statements-row">
-        <span class="statement-word">Renovate.</span>
-    </div>
-    <div class="statements-row">
-        <span class="statement-word sep">Mostrá</span>
-        <span class="statement-word sep">tu</span>
-        <span class="statement-word">mejor</span>
-        <span class="statement-word">versión.</span>
-    </div>
-    <p class="statement-sub reveal" style="margin-top:2.5rem;">Barbería Bass · Salta</p>
-</div>
-
 <!-- PORTFOLIO (videos) -->
 <div id="portfolio">
     <div class="portfolio-inner">
@@ -1348,25 +1322,38 @@ document.querySelectorAll('.portfolio-item').forEach(item => {
     document.getElementById('next-btn').addEventListener('click', () => { goTo(current + 1); startAuto(); });
     dots.forEach(d => d.addEventListener('click', () => { goTo(+d.dataset.index); startAuto(); }));
 
-    // Drag / swipe
+    // Drag / swipe — solo activa horizontal, deja pasar el scroll vertical
+    let startY = 0, dirLocked = false;
     wrap.addEventListener('pointerdown', e => {
-        isDragging = true; startX = e.clientX; dragDelta = 0;
-        track.style.transition = 'none';
-        wrap.setPointerCapture(e.pointerId);
-    });
+        startX = e.clientX; startY = e.clientY;
+        dragDelta = 0; isDragging = false; dirLocked = false;
+    }, { passive: true });
+
     wrap.addEventListener('pointermove', e => {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        if (!dirLocked) {
+            // Si el primer movimiento es más vertical que horizontal → no interferir
+            if (Math.abs(dy) > Math.abs(dx) + 3) return;
+            // Es horizontal → tomamos control
+            dirLocked = true;
+            isDragging = true;
+            wrap.setPointerCapture(e.pointerId);
+            track.style.transition = 'none';
+        }
         if (!isDragging) return;
-        dragDelta = e.clientX - startX;
+        dragDelta = dx;
         track.style.transform = `translateX(${getOffset() + dragDelta}px)`;
-    });
+    }, { passive: true });
+
     wrap.addEventListener('pointerup', () => {
         if (!isDragging) return;
-        isDragging = false;
+        isDragging = false; dirLocked = false;
         if (dragDelta < -50) goTo(current + 1);
         else if (dragDelta > 50) goTo(current - 1);
         else goTo(current);
         startAuto();
-    });
+    }, { passive: true });
 
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft') { goTo(current - 1); startAuto(); }
