@@ -174,12 +174,11 @@
             width: 100%;
         }
         .hero-logo {
-            width: min(220px, 52vw);
+            width: min(360px, 80vw);
             height: auto;
             object-fit: contain;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
             filter: brightness(0) invert(1);
-            drop-shadow: none;
             animation: logoPop 1.2s var(--ease) both;
         }
         @keyframes logoPop {
@@ -189,9 +188,9 @@
         }
         .hero-tagline {
             font-family: 'Bebas Neue', cursive;
-            font-size: clamp(3.5rem, 12vw, 9rem);
-            line-height: 0.88;
-            letter-spacing: 0.03em;
+            font-size: clamp(1.6rem, 5vw, 3.2rem);
+            line-height: 1;
+            letter-spacing: 0.08em;
             animation: fadeUp 1s var(--ease) 0.2s both;
         }
         .hero-tagline span { display: block; }
